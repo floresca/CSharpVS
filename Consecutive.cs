@@ -17,7 +17,6 @@ namespace Consecutive
 
     class CongaLine
     {
-        public List<int> numberList = new List<int>();
         int control;
 
         public void GetNumbers()
