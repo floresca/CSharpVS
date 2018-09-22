@@ -10,6 +10,8 @@ namespace TimeValue
     {
         static void Main(string[] args)
         {
+            var stuff = new Time();
+            stuff.GetTime();
         }
     }
 
@@ -27,7 +29,15 @@ namespace TimeValue
 
         public void Validate(string input)
         {
-
+            try
+            {
+                var things = TimeSpan.Parse(input);
+                Console.WriteLine("OK");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Time");
+            }
         }
     }
 }
