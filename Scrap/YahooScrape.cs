@@ -27,3 +27,46 @@ using (var potatoes = new ChromeDriver(Environment.CurrentDirectory))
             Console.WriteLine(ticker.Text);
         }
     }
+    
+    //var urlGet = new HtmlWeb();
+//var document = urlGet.Load("https://finance.yahoo.com/portfolio/p_0/view/v1");
+//var liTags = document.DocumentNode.SelectNodes("//table[@class='_1TagL']");
+
+//if (liTags != null)
+//{
+//    foreach (var li in liTags)
+//    {
+//        string tagcontent = li.InnerHtml;
+//        Console.WriteLine(tagcontent);
+//    }
+//}
+
+
+//create browser reference
+//IWebDriver driver = new ChromeDriver();
+
+//static void Main(string[] args)
+//{
+
+//}
+
+//[Test]
+//public void Initialize()
+//{
+//    //Navigate to Google page
+//    driver.Navigate().GoToUrl("http://www.google.com");
+//}
+
+//public void ExecuteTest()
+//{
+//    //Find the input
+//    IWebElement input = driver.FindElement(By.Name("q"));
+
+//    //perform Ops
+//    input.SendKeys("executeautomation");
+//}
+
+//public void CleanUp()
+//{
+//    driver.Close();
+//}
