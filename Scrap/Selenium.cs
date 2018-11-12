@@ -19,11 +19,6 @@ namespace Scrape
             
         }
 
-        [SetUp]
-        public void Initialize()
-        {
-            driver.Navigate().GoToUrl("http://www.google.com");
-        }
 
         [Test]
         public void ExecuteTest()
@@ -33,10 +28,6 @@ namespace Scrape
             element.SendKeys("Executeautomation");
         }
 
-        [TearDown]
-        public void CleanUp()
-        {
-            driver.Close();
-        }
+
     }
 }
