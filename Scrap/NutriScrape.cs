@@ -34,36 +34,21 @@ namespace NutriScrape
                 }
                 else
                 {
-                    var site = "https://www.google.com/search?q=" + input + "calories";
+                    string site = "https://www.nutritionix.com/food/" + input;
                     var urlGet = new HtmlWeb();
                     var document = urlGet.Load(site);
-                    //var Calories = document.DocumentNode.Descendants("div").Where(d => d.Attributes.Contains("itemprop") && d.Attributes["itemprop"].Contains("calories"));
                     var Calories = document.DocumentNode.SelectNodes("//div[@tabindex='0']");
 
+                    //THIS IS STILL NOT WORKING RIGHT
+                    //I must nt be understanding the type of data coming out of the DocumentNode since it clearly is not printable to console
+                    //Must convert data out of DocumentNode to something WriteLine method can print, like text
+                    //Tried innerText and innerHtml to no result
                     Console.WriteLine(Calories.TextContent);
-                    //var Calories = document.DocumentNode.SelectNodes("//*[@id='kno - nf - nc']/table/tbody/tr[2]/td/span[2]");
-                    //Console.WriteLine(Calories);
+
                 }
 
             }
         }
     }
 
-    //class Scrape : Food
-    //{
-    //    public void URLGet()
-    //    {
-    //        var site = "https://www.google.com/search?q=" + input + "calories";
-    //        var urlGet = new HtmlWeb();
-    //        var document = urlGet.Load(site);
-    //        //var Calories = document.DocumentNode.Descendants("div").Where(d => d.Attributes.Contains("itemprop") && d.Attributes["itemprop"].Contains("calories"));
-    //        //var Calories = document.DocumentNode.SelectNodes("//span[contains (@itemprop, 'calories')]");
-
-    //        //Console.WriteLine(Calories);
-
-    //        var Calories = document.DocumentNode.SelectNodes("//*[@id='kno - nf - nc']/table/tbody/tr[2]/td/span[2]");
-    //        Console.WriteLine(Calories);
-
-    //    }
-    //}
 }
