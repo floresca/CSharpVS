@@ -30,7 +30,7 @@ using (var potatoes = new ChromeDriver(Environment.CurrentDirectory))
         }
     }
     
-//     var urlGet = new HtmlWeb();
+// var urlGet = new HtmlWeb();
 // var document = urlGet.Load("https://finance.yahoo.com/portfolio/p_0/view/v1");
 // var liTags = document.DocumentNode.SelectNodes("//table[@class='_1TagL']");
 
