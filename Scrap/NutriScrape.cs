@@ -9,7 +9,7 @@ namespace NutriScrape
 {
     class Program
     {
-        static void Main(string[] args)z
+        static void Main(string[] args)
         {
             var nutrition = new Food();
             nutrition.UserInput();
@@ -34,21 +34,40 @@ namespace NutriScrape
                 }
                 else
                 {
-                    string site = "https://www.nutritionix.com/food/" + input;
-                    var urlGet = new HtmlWeb();
-                    var document = urlGet.Load(site);
-                    var Calories = document.DocumentNode.SelectNodes("//div[@tabindex='0']");
+                    
+                    HtmlWeb urlGet = new HtmlWeb();
+                    var document = urlGet.Load("https://www.nutritionix.com/food/" + input);
+                    Console.WriteLine(document);
 
-                    //THIS IS STILL NOT WORKING RIGHT
-                    //I must nt be understanding the type of data coming out of the DocumentNode since it clearly is not printable to console
-                    //Must convert data out of DocumentNode to something WriteLine method can print, like text
-                    //Tried innerText and innerHtml to no result
-                    Console.WriteLine(Calories.TextContent);
+                    //var Calories = document.DocumentNode.SelectSingleNode("//span[@itemprop='calories']");
 
+
+
+                    
+                    var Calories = document.DocumentNode.Descendants("span").Where(node => node.Attributes["itemprop"] != null && node.Attributes["itemprop"].Value == "calories") ;
+
+                    Console.WriteLine(Calories.);
                 }
 
             }
         }
     }
 
+    //class Scrape : Food
+    //{
+    //    public void URLGet()
+    //    {
+    //        var site = "https://www.google.com/search?q=" + input + "calories";
+    //        var urlGet = new HtmlWeb();
+    //        var document = urlGet.Load(site);
+    //        //var Calories = document.DocumentNode.Descendants("div").Where(d => d.Attributes.Contains("itemprop") && d.Attributes["itemprop"].Contains("calories"));
+    //        //var Calories = document.DocumentNode.SelectNodes("//span[contains (@itemprop, 'calories')]");
+
+    //        //Console.WriteLine(Calories);
+
+    //        var Calories = document.DocumentNode.SelectNodes("//*[@id='kno - nf - nc']/table/tbody/tr[2]/td/span[2]");
+    //        Console.WriteLine(Calories);
+
+    //    }
+    //}
 }
