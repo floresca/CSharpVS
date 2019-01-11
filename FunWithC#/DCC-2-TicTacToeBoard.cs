@@ -34,7 +34,7 @@ namespace DCC_2_TicTacToe
             int repeat = 0;
             int specialRow = 0;
             int finalCount = 0;
-
+            char spaces = 'A';
             
             do
             {
@@ -45,7 +45,8 @@ namespace DCC_2_TicTacToe
                     {
                         for (int j = 0; j < size; j++)
                         {
-                            Console.Write("   ");
+                            Console.Write(" {0} ", spaces);
+                            repeat++;
                             repeat++;
                         }
 
@@ -96,6 +97,35 @@ namespace DCC_2_TicTacToe
             while (finalCount < 3);
         }
     }
+    
+    class TicTacToeGame : TicTacToe
+    {
+        public List<string> gamePositions = new List<string>();
+
+        public void CallGamePieces()
+        {
+            while (true)
+            {
+                Console.Write("Enter X or O and a position: ");
+                string input = Console.ReadLine();
+
+                if (input == "end")
+                {
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    gamePositions.Add(input);
+
+                    foreach (string piece in gamePositions)
+                    {
+                        Console.WriteLine(piece);
+                    }
+                }
+            }
+        }
+    }
+}
 }
 
 
