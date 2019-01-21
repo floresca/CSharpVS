@@ -27,8 +27,8 @@ namespace YahooScrape
                 potatoes.Url = "https://login.yahoo.com";
                 potatoes.Navigate();
 
-                Console.Write("Please enter your user name: ");
-                string userName = Console.ReadLine();
+                //Console.Write("Please enter your user name: ");
+                string userName = "floresc.andres@gmail.com";
 
                 potatoes.FindElementById("login-username").SendKeys(userName);
                 potatoes.FindElementById("login-signin").Click();
@@ -38,17 +38,18 @@ namespace YahooScrape
                 IWebElement input = espera.Until(ExpectedConditions.ElementIsVisible(By.Id("login-passwd")));
 
                 Console.Write("Enter your password: ");
-                string password = Console.ReadLine();
+                string password = "TMG72gyS";
 
                 input.SendKeys(password);
                 potatoes.FindElementById("login-signin").Click();
 
                 potatoes.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view/v1");
 
-                espera.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='pf-detail-table']/div[1]/table/tbody")));
+                espera.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='Lead-2-Portfolios-Proxy']/main/div/div[2]")));
                 //*[@id="pf-detail-table"]/div[1]/table/tbody/tr[1]/td[1]
                 //*[@id="pf-detail-table"]/div[1]/table/tbody
                 //*[@id="pf-detail-table"]/div[1]/table/tbody/tr[1]
+                //*[@id="Lead-2-Portfolios-Proxy"]/main/div/div[2]
 
                 int counter = 0;
                 foreach (var piece in potatoes.FindElementsByXPath("//*[@id='pf-detail-table']/div[1]/table/tbody/tr["+counter+"]"))
@@ -70,6 +71,7 @@ namespace YahooScrape
         }
     }
 }
+
 
 
 
