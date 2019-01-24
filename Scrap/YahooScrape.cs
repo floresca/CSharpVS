@@ -45,7 +45,7 @@ namespace YahooScrape
 
                 potatoes.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view/v1");
 
-                espera.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='Lead-2-Portfolios-Proxy']/main/div/div[2]")));
+                espera.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='pf-detail-table']/div[1]/table/tbody/tr[1]/td[1]")));
                 //*[@id="pf-detail-table"]/div[1]/table/tbody/tr[1]/td[1]
                 //*[@id="pf-detail-table"]/div[1]/table/tbody
                 //*[@id="pf-detail-table"]/div[1]/table/tbody/tr[1]
@@ -71,6 +71,7 @@ namespace YahooScrape
         }
     }
 }
+
 
 
 
