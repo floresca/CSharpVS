@@ -20,6 +20,332 @@ namespace DCC_2_TicTacToe
         string playLoad = null; //this variable is the user input for playing a new game or loading an existing game
         string savedGame = null; //user inputed saved game
         int location; //this variable is the user input for moves
+        bool isItXturn = true; //Used to switch turns between O player and X player
+        int moves = 0; //Count the amount of moves made
+        string checkUp = null; //accept the user input and put it through validation to make sure it is good
+
+        List<int> arrayX = new List<int> { };
+        List<int> arrayO = new List<int> { };
+
+        //initialized where the pieces will be stored
+        IDictionary<int, string> boardPieces = new Dictionary<int, string>();
+        string[] locators = new string[10];
+
+        public void Start()
+        {
+            Console.Write("What would you like to do, 'Play' a new game or 'Load' a saved game?: ");
+            playLoad = Console.ReadLine();
+
+            if (playLoad == "Play")
+            {
+                RunGame();
+            }
+            else if (playLoad == "Load")
+            {
+                Console.Write("Enter your save code!: ");
+                savedGame = Console.ReadLine();
+                Load(savedGame);
+            }
+            else if (playLoad == "End")
+            {
+                Exit();
+            }
+        }
+
+        //This method Loads a game based on user input array. it also keeps tab of how many X and O are in code and sends it to validate
+        public void Load(string input)
+        {
+            char[] savedGameCode = input.ToCharArray();
+
+            for (int i = 0; i < savedGameCode.Length; i++)
+            {
+                if (savedGameCode[i] == 'O')
+                {
+                    boardPieces.Add(i, "O");
+                    isItXturn = true;
+                    arrayX.Add(i);
+                    moves++;
+                }
+                else if (savedGameCode[i] == 'X')
+                {
+                    boardPieces.Add(i + 1, "X");
+                    isItXturn = false;
+                    arrayO.Add(i);
+                    moves++;
+                }
+                else if (savedGameCode[i] == '0')
+                {
+                    continue;
+                }
+            }
+            SavedGameValidation();
+        }
+
+        //This method validates that the user code has an equal amount of Xs and Os. If the code fails the user is asked to plat again
+        public void SavedGameValidation()
+        {
+            int hello = arrayX.Count() - arrayO.Count();
+
+            if (hello == 1 || hello == -1 || hello == 0)
+            {
+                RunGame();
+            }
+            else
+            {
+                Console.WriteLine("Sorry, this code is not valid");
+                boardPieces.Clear();
+                arrayO.Clear();
+                arrayX.Clear();
+                moves = 0;
+                Start();
+            }
+        }
+
+        //This method asks for either X or O key locations. It sends the value to validate, if its good it adds value to dictionary
+        public void RunGame()
+        {
+            while (moves < 9)
+            {
+                if (isItXturn == true)
+                {
+                    Console.Write("Enter a location for X: ");
+                    checkUp = Console.ReadLine();
+                    if (checkUp == "End")
+                    {
+                        Exit();
+                    }
+                    else if (checkUp == "Save")
+                    {
+                        SaveGame();
+                    }
+                    else
+                    {
+                        location = Convert.ToInt32(checkUp);
+                        KeyValidation();
+                        isItXturn = false;
+                        boardPieces.Add(location, "X");
+                        UpdateGameBoard();
+                    }
+                    
+                }
+                else
+                {
+                    Console.Write("Enter a location for O: ");
+                    checkUp = Console.ReadLine();
+                    if (checkUp == "End")
+                    {
+                        Exit();
+                    }
+                    else if (checkUp == "Save")
+                    {
+                        SaveGame();
+                    }
+                    else
+                    {
+                        location = Convert.ToInt32(checkUp);
+                        KeyValidation();
+                        isItXturn = true;
+                        boardPieces.Add(location, "O");
+                        UpdateGameBoard();
+                    }
+                }
+            }
+        }
+
+        //Is the space occupied?
+        public void KeyValidation()
+        {
+            if (boardPieces.ContainsKey(location) == true)
+            {
+                Console.WriteLine("Invalid move, enter an empty spot");
+                RunGame();
+            }
+        }
+
+        //This method makes an array of saved keys which is also given to the draw method to update the board
+        public void UpdateGameBoard()
+        {
+            for (var i = 1; i < locators.Length; i++)
+            {
+                if (boardPieces.ContainsKey(i))
+                {
+                    locators[i] = boardPieces[i]; //if the key exists in the dictionary enter it into the array
+                }
+                else
+                {
+                    locators[i] = " "; //fill the space with blanks if the key does not exist
+                }
+            }
+
+            Draw(locators); //send the array to the draw method
+            Win(locators);
+        }
+
+        //This method saves the game for the user and ends the round
+        public void SaveGame()
+        {
+            string saveCode = null;
+            for (int i = 0; i < locators.Length; i++)
+            {
+                if (locators[i] == " ")
+                {
+                    locators[i] = "0";
+                }
+            }
+
+            for (int i = 0; i < locators.Length; i++)
+            {
+                saveCode += locators[i];
+            }
+
+            Console.WriteLine("Your save code is {0}", saveCode);
+            Exit();
+        }
+
+        //This method draws the board based on the array. It draws the columns and rows individually (initially used for resizing the grid. Feautre disabled to allow playing in version 3)
+        public void Draw(string[] values)
+        {
+            int size = 1;
+            int columns = 3;
+            int repeat = 0;
+            int specialRow = 0;
+            int finalCount = 0;
+            int spaces = 1;
+
+            do
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    do
+                    {
+                        for (int j = 0; j < size; j++)
+                        {
+                            Console.Write(" {0} ", values[spaces]);
+                            repeat++;
+                            spaces++;
+                        }
+
+                        if (repeat == columns)
+                        {
+                            break;
+                        }
+                        else if (repeat < columns)
+                        {
+                            Console.Write("|");
+                        }
+                    }
+                    while (repeat < columns);
+                    repeat = 0;
+                    Console.WriteLine();
+                }
+                specialRow++;
+                finalCount++;
+
+                if (specialRow < 3)
+                {
+                    do
+                    {
+                        for (int j = 0; j < size; j++)
+                        {
+                            Console.Write("---");
+                            repeat++;
+                        }
+
+                        if (repeat == columns)
+                        {
+                            break;
+                        }
+                        else if (repeat < columns)
+                        {
+                            Console.Write("+");
+                        }
+                    }
+                    while (repeat < columns);
+                    repeat = 0;
+                    Console.WriteLine();
+                }
+            }
+            while (finalCount < 3);
+        }
+
+        //This method sets the winning condition. It is in need of refactoring
+        public void Win(string[] areThereWinners)
+        {
+            if ((areThereWinners[1] == areThereWinners[2] && areThereWinners[2] == areThereWinners[3]) && areThereWinners[1] != " ")
+            {
+                Console.WriteLine("Congrats player {0}, you win!", areThereWinners[1]);
+                Environment.Exit(0);
+            }
+            else if ((areThereWinners[4] == areThereWinners[5] && areThereWinners[5] == areThereWinners[6]) && areThereWinners[4] != " ")
+            {
+                Console.WriteLine("Congrats player {0}, you win!", areThereWinners[4]);
+                Environment.Exit(0);
+            }
+            else if ((areThereWinners[7] == areThereWinners[8] && areThereWinners[8] == areThereWinners[9]) && areThereWinners[7] != " ")
+            {
+                Console.WriteLine("Congrats player {0}, you win!", areThereWinners[7]);
+                Environment.Exit(0);
+            }
+            else if ((areThereWinners[1] == areThereWinners[5] && areThereWinners[5] == areThereWinners[9]) && areThereWinners[1] != " ")
+            {
+                Console.WriteLine("Congrats player {0}, you win!", areThereWinners[1]);
+                Environment.Exit(0);
+            }
+            else if ((areThereWinners[3] == areThereWinners[5] && areThereWinners[5] == areThereWinners[7]) && areThereWinners[3] != " ")
+            {
+                Console.WriteLine("Congrats player {0}, you win!", areThereWinners[3]);
+                Environment.Exit(0);
+            }
+            else if ((areThereWinners[1] == areThereWinners[4] && areThereWinners[4] == areThereWinners[7]) && areThereWinners[1] != " ")
+            {
+                Console.WriteLine("Congrats player {0}, you win!", areThereWinners[7]);
+                Environment.Exit(0);
+            }
+            else if ((areThereWinners[2] == areThereWinners[5] && areThereWinners[5] == areThereWinners[8]) && areThereWinners[2] != " ")
+            {
+                Console.WriteLine("Congrats player {0}, you win!", areThereWinners[2]);
+                Environment.Exit(0);
+            }
+            else if ((areThereWinners[3] == areThereWinners[6] && areThereWinners[6] == areThereWinners[9]) && areThereWinners[3] != " ")
+            {
+                Console.WriteLine("Congrats player {0}, you win!", areThereWinners[3]);
+                Environment.Exit(0);
+            }
+        }
+
+        //End the game
+        public void Exit()
+        {
+            Environment.Exit(0);
+        }
+    }
+}
+
+
+//---------------------------------------------------------------------- VERSION 4 BELOW prints a game with X and O, it can load saved games, refactored some items, validate that keys are good 
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DCC_2_TicTacToe
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var stuff = new TicTacToe();
+            stuff.Start();
+        }
+    }
+
+    class TicTacToe
+    {
+        string playLoad = null; //this variable is the user input for playing a new game or loading an existing game
+        string savedGame = null; //user inputed saved game
+        int location; //this variable is the user input for moves
         bool isItXturn = true; //this boolean will be used to switch turns between O player and X player
         int moves = 0; //This variable will count the amount of moves made
         string checkUp = null;
