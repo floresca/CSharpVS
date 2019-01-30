@@ -148,52 +148,62 @@ namespace DCC_2_TicTacToe
             {
                 if (isItXturn == true)
                 {
-                    Console.Write("Enter a location for X: ");
-                    checkUp = Console.ReadLine();
-                    if (checkUp == "End")
-                    {
-                        Exit();
-                    }
-                    else if (checkUp == "Save")
-                    {
-                        SaveGame();
-                    }
-                    else
-                    {
-                        location = Convert.ToInt32(checkUp);
-                        KeyValidation();
-                        isItXturn = false;
-                        boardPieces.Add(location, "X");
-                        arrayX.Add(location);
-                        UpdateGameBoard();
-                        moves++;
-                        Win(arrayX, "X");
-                    }
+                    Xmove();
                 }
                 else
                 {
-                    Console.Write("Enter a location for O: ");
-                    checkUp = Console.ReadLine();
-                    if (checkUp == "End")
-                    {
-                        Exit();
-                    }
-                    else if (checkUp == "Save")
-                    {
-                        SaveGame();
-                    }
-                    else
-                    {
-                        location = Convert.ToInt32(checkUp);
-                        KeyValidation();
-                        isItXturn = true;
-                        boardPieces.Add(location, "O");
-                        arrayO.Add(location);
-                        UpdateGameBoard();
-                        moves++;
-                        Win(arrayO, "O");
-                    }
+                    Omove();
                 }
+            }
+        }
+
+        public void Xmove()
+        {
+            Console.Write("Enter a location for X: ");
+            checkUp = Console.ReadLine();
+            if (checkUp == "End")
+            {
+                Exit();
+            }
+            else if (checkUp == "Save")
+            {
+                SaveGame();
+            }
+            else
+            {
+                location = Convert.ToInt32(checkUp);
+                KeyValidation();
+                isItXturn = false;
+                boardPieces.Add(location, "X");
+                arrayX.Add(location);
+                UpdateGameBoard();
+                moves++;
+                Win(arrayX, "X");
+            }
+        }
+
+        public void Omove()
+        {
+            Console.Write("Enter a location for O: ");
+            checkUp = Console.ReadLine();
+            if (checkUp == "End")
+            {
+                Exit();
+            }
+            else if (checkUp == "Save")
+            {
+                SaveGame();
+            }
+            else
+            {
+                location = Convert.ToInt32(checkUp);
+                KeyValidation();
+                isItXturn = true;
+                boardPieces.Add(location, "O");
+                arrayO.Add(location);
+                UpdateGameBoard();
+                moves++;
+                Win(arrayO, "O");
             }
         }
 
@@ -347,6 +357,7 @@ namespace DCC_2_TicTacToe
         }
     }
 }
+
 
 
 //---------------------------------------------------------------------- VERSION 5 below can save games and keeps track of X and Os entered by user
