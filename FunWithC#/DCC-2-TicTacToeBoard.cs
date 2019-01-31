@@ -25,6 +25,7 @@ namespace DCC_2_TicTacToe
         bool isItXturn = true;                      //Boolean used to switch turns between O player and X player, X always starts the game
         int moves = 0;                              //Keep track of the amount of moves made
         string checkUp = null;                      //Accept the user input and put it through validation to make sure it is good
+        string token = "X";
 
         List<int> arrayX = new List<int> { };       //Locations of X in the game
         List<int> arrayO = new List<int> { };       //Locations of Y in the game
@@ -156,11 +157,24 @@ namespace DCC_2_TicTacToe
                 }
             }
         }
+        
+        public void PlayerMove()
+        {
+            Console.Write("Enter a location for {0}: ", token);
+            checkUp = Console.ReadLine();
+            if (token == "X")
+            {
+                Xmove();
+            }
+            else
+            {
+                Omove();
+            }
+            
+        }
 
         public void Xmove()
         {
-            Console.Write("Enter a location for X: ");
-            checkUp = Console.ReadLine();
             if (checkUp == "End")
             {
                 Exit();
