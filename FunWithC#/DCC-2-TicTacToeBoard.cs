@@ -1,5 +1,6 @@
 //---------------------------------------------------------------------- VERSION 7 Has been refactored. It now accepts user input as well as play against an simple AI that plays random spots. 
 //---------------------------------------------------------------------- AI does not check if a number is repeated and will repeat random until an empty spot can be plaied. This can cause a stack overflow if enough repetitions occur
+//---------------------------------------------------------------------- Solution may be a shuffle algorithm vs random selection
 
 using System;
 using System.Collections.Generic;
