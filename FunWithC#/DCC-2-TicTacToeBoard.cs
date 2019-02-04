@@ -1,4 +1,5 @@
 //---------------------------------------------------------------------- VERSION 8 Has been refactored. Simple AI now shuffles an array an picks a move from there. Prevention of stack overflow
+//---------------------------------------------------------------------- Pseudo code for intermediate AI included as well. AI designed to block player
 
 using System;
 using System.Collections.Generic;
@@ -409,6 +410,37 @@ namespace DCC_2_TicTacToe
             }
             while (finalCount < 3);
             Console.WriteLine();
+        }
+        
+        public void WinConditions()
+        {
+            if (arrayX.Contains(1))
+            {
+                if(arrayX.Contains(2))
+                {
+                    //play location 3
+                }
+                else if (arrayX.Contains(3))
+                {
+                    //play location 2
+                }
+                else if (arrayX.Contains(5))
+                {
+                    //play location 9
+                }
+                else if (arrayX.Contains(9))
+                {
+                    //play location 5
+                }
+                else if (arrayX.Contains(4))
+                {
+                    //play location 7
+                }
+                else if (arrayX.Contains(7))
+                {
+                    //play location 4
+                }
+            }
         }
 
         //This method sets the basic winning conditions. Future addition: predict who is going to win by move 4, predit a draw by move 7
