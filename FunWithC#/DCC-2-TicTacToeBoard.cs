@@ -265,6 +265,15 @@ namespace DCC_2_TicTacToe
         //AI input if user decides to play against AI
         public void AIinput()
         {
+            LVL1AI();
+            KeyValidation();
+            spaces.Remove(spaces[0]);
+            Console.WriteLine("It is the Computer's turn");
+            TokenMove(location);
+        }
+        
+        public void LVL1AI()
+        {
             for (int i = 0; i < spaces.Count; i++)
             {
                 Random random = new Random();
@@ -274,12 +283,63 @@ namespace DCC_2_TicTacToe
                 spaces[i] = secondSpot;
                 spaces[randomSpot] = firstSpot;
             }
-
+            
             location = Convert.ToInt32(spaces[0]);
-            KeyValidation();
-            spaces.Remove(spaces[0]);
-            Console.WriteLine("It is the Computer's turn");
-            TokenMove(location);
+        }
+        
+        public void LVL2AI()
+        {
+            if (arrayX.Contains(1))
+            {
+                
+            }
+            else if (arrayX.Contains(2))
+            {
+                if(arrayX.Contains(1) && spaces.Contains("3"))
+                {
+                    location = 3;
+                }
+                else if (arrayX.Contains(3) && spaces.Contains("1"))
+                {
+                    location = 1;
+                }
+                else if (arrayX.Contains(5) && spaces.Contains("8"))
+                {
+                    location = 8;
+                }
+                else if (arrayX.Contains(8) && spaces.Contains("5"))
+                {
+                    location = 5;
+                }
+            }
+        }
+        
+        public void AI2if1()
+        {
+            if(arrayX.Contains(2) && spaces.Contains("3"))
+            {
+                location = 3;
+            }
+            else if (arrayX.Contains(3) && spaces.Contains("2"))
+            {
+                location = 2;
+            }
+            else if (arrayX.Contains(5) && spaces.Contains("9"))
+            {
+                location = 9;
+            }
+            else if (arrayX.Contains(9) && spaces.Contains("5"))
+            {
+                location = 5;
+            }
+            else if (arrayX.Contains(4) && spaces.Contains("7"))
+            {
+                location = 7;
+            }
+            else if (arrayX.Contains(7) && spaces.Contains("4"))
+            {
+                location = 4;
+            }   
         }
 
         //Is the space occupied?
@@ -412,37 +472,6 @@ namespace DCC_2_TicTacToe
             Console.WriteLine();
         }
         
-        public void WinConditions()
-        {
-            if (arrayX.Contains(1))
-            {
-                if(arrayX.Contains(2))
-                {
-                    //play location 3
-                }
-                else if (arrayX.Contains(3))
-                {
-                    //play location 2
-                }
-                else if (arrayX.Contains(5))
-                {
-                    //play location 9
-                }
-                else if (arrayX.Contains(9))
-                {
-                    //play location 5
-                }
-                else if (arrayX.Contains(4))
-                {
-                    //play location 7
-                }
-                else if (arrayX.Contains(7))
-                {
-                    //play location 4
-                }
-            }
-        }
-
         //This method sets the basic winning conditions. Future addition: predict who is going to win by move 4, predit a draw by move 7
         public void Win(List<int> Local, string token)
         {
