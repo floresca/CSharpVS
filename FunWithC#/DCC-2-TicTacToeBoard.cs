@@ -291,7 +291,30 @@ namespace DCC_2_TicTacToe
         {
             if (arrayX.Contains(1))
             {
-                
+                if(arrayX.Contains(2) && spaces.Contains("3"))
+                {
+                    location = 3;
+                }
+                else if (arrayX.Contains(3) && spaces.Contains("2"))
+                {
+                    location = 2;
+                }
+                else if (arrayX.Contains(5) && spaces.Contains("9"))
+                {
+                    location = 9;
+                }
+                else if (arrayX.Contains(9) && spaces.Contains("5"))
+                {
+                    location = 5;
+                }
+                else if (arrayX.Contains(4) && spaces.Contains("7"))
+                {
+                    location = 7;
+                }
+                else if (arrayX.Contains(7) && spaces.Contains("4"))
+                {
+                    location = 4;
+                } 
             }
             else if (arrayX.Contains(2))
             {
@@ -312,35 +335,36 @@ namespace DCC_2_TicTacToe
                     location = 5;
                 }
             }
+            else if (arrayX.Contains(3))
+            {
+                if(arrayX.Contains(2) && spaces.Contains("1"))
+                {
+                    location = 1;
+                }
+                else if (arrayX.Contains(1) && spaces.Contains("2"))
+                {
+                    location = 2;
+                }
+                else if (arrayX.Contains(5) && spaces.Contains("7"))
+                {
+                    location = 7;
+                }
+                else if (arrayX.Contains(7) && spaces.Contains("5"))
+                {
+                    location = 5;
+                }
+                else if (arrayX.Contains(6) && spaces.Contains("9"))
+                {
+                    location = 9;
+                }
+                else if (arrayX.Contains(9) && spaces.Contains("6"))
+                {
+                    location = 6;
+                } 
+            }
         }
         
-        public void AI2if1()
-        {
-            if(arrayX.Contains(2) && spaces.Contains("3"))
-            {
-                location = 3;
-            }
-            else if (arrayX.Contains(3) && spaces.Contains("2"))
-            {
-                location = 2;
-            }
-            else if (arrayX.Contains(5) && spaces.Contains("9"))
-            {
-                location = 9;
-            }
-            else if (arrayX.Contains(9) && spaces.Contains("5"))
-            {
-                location = 5;
-            }
-            else if (arrayX.Contains(4) && spaces.Contains("7"))
-            {
-                location = 7;
-            }
-            else if (arrayX.Contains(7) && spaces.Contains("4"))
-            {
-                location = 4;
-            }   
-        }
+        
 
         //Is the space occupied?
         public void KeyValidation()
