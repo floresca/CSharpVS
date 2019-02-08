@@ -416,6 +416,25 @@ namespace DCC_2_TicTacToe
                     location = 4;
                 } 
             }
+            else if (arrayX.Contains(6))
+            {
+                if(arrayX.Contains(3) && spaces.Contains("9"))
+                {
+                    location = 9;
+                }
+                else if (arrayX.Contains(5) && spaces.Contains("4"))
+                {
+                    location = 4;
+                }
+                else if (arrayX.Contains(4) && spaces.Contains("5"))
+                {
+                    location = 5;
+                }
+                else if (arrayX.Contains(9) && spaces.Contains("3"))
+                {
+                    location = 3;
+                }
+            }
         }
         
         
