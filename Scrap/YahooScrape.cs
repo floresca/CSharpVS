@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace YahooScrape
 {
@@ -14,139 +15,78 @@ namespace YahooScrape
         static void Main(string[] args)
         {
             var hello = new Scraper();
-            hello.Navigate();
+            hello.GoScrape();
         }
     }
 
     class Scraper
     {
-        public void Navigate()
+        List<string[]> elementsArray = new List<string[]>();
+
+        public void GoScrape()
         {
             using (var potatoes = new ChromeDriver(Environment.CurrentDirectory))
             {
                 potatoes.Url = "https://login.yahoo.com";
                 potatoes.Navigate();
 
-                //Console.Write("Please enter your user name: ");
-                string userName = "floresc.andres@gmail.com";
+                string userName = "world";
 
                 potatoes.FindElementById("login-username").SendKeys(userName);
                 potatoes.FindElementById("login-signin").Click();
 
-                //potatoes.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
-                WebDriverWait espera = new WebDriverWait(potatoes, TimeSpan.FromSeconds(30));
+                WebDriverWait espera = new WebDriverWait(potatoes, TimeSpan.FromSeconds(20));
                 IWebElement input = espera.Until(ExpectedConditions.ElementIsVisible(By.Id("login-passwd")));
 
-                Console.Write("Enter your password: ");
-                string password = "TMG72gyS";
+                string password = "hello";
 
                 input.SendKeys(password);
+
                 potatoes.FindElementById("login-signin").Click();
 
                 potatoes.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view/v1");
 
-                espera.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='pf-detail-table']/div[1]/table/tbody/tr[1]/td[1]")));
-                //*[@id="pf-detail-table"]/div[1]/table/tbody/tr[1]/td[1]
-                //*[@id="pf-detail-table"]/div[1]/table/tbody
-                //*[@id="pf-detail-table"]/div[1]/table/tbody/tr[1]
-                //*[@id="Lead-2-Portfolios-Proxy"]/main/div/div[2]
+                espera.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='pf-detail-table']/div[1]/table/tbody")));
+                
+                var tableBody = potatoes.FindElementByXPath("//*[@id='pf-detail-table']/div[1]/table/tbody");
 
-                int counter = 0;
-                foreach (var piece in potatoes.FindElementsByXPath("//*[@id='pf-detail-table']/div[1]/table/tbody/tr["+counter+"]"))
-                {
-                    string[] cake = piece.Text.Split(' ');
-                    counter++;
-
-                    string ticker = cake[0];
-                    string stockPrice = cake[1];
-                    string stockPriceChange = cake[2];
-                    string stockPricePercentChange = cake[3];
-                    string exchangeVolume = cake[8];
-                    string averageVolume3Months = cake[10];
-                    string marketCap = cake[11];
-
-                    Console.WriteLine("The stock price for {0} is {1} while their market cap is {2}", ticker, stockPrice, marketCap);
-                }
+                DataPull(tableBody);
             }
+        }
+
+        public void DataPull(IWebElement tableBody)
+        {
+            foreach (var tableData in tableBody.FindElements(By.TagName("tr")))
+            {
+                int counter = 0;
+                string[] smallArray = new string[17];
+
+                foreach (var tableDataPieces in tableData.FindElements(By.TagName("td")))
+                {
+                    smallArray[counter] = tableDataPieces.Text;
+                    counter++;
+                }
+
+                elementsArray.Add(smallArray);
+            }
+
+            DataSave();
+        }
+
+        public void DataSave()
+        {
+            SqlConnection stocksDatabase = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\FloresPC\Desktop\Programming\Scraper\YahooScrape\YahooScrape\yahooStocksData.mdf; Integrated Security = True");
+
+            stocksDatabase.Open();
+
+            for (int i = 0; i < elementsArray.Count; i++)
+            {
+                SqlCommand items = new SqlCommand("INSERT INTO Stocks VALUES ( '" + elementsArray[i][0] + "', '" + elementsArray[i][1] + "', '" + elementsArray[i][2] + "', '" + elementsArray[i][3] + "', '" + elementsArray[i][6] + "', '" + elementsArray[i][12] + "')", stocksDatabase);
+                
+                items.ExecuteNonQuery();
+            }
+
+            stocksDatabase.Close();
         }
     }
 }
-
-
-
-
-
-// using (var potatoes = new ChromeDriver(Environment.CurrentDirectory))
-//     {
-//         potatoes.Url = "https://login.yahoo.com";
-//         potatoes.Navigate();
-
-//         Console.Write("Please enter your user name: ");
-//         string userName = Console.ReadLine();
-
-//         potatoes.FindElementById("login-username").SendKeys(userName);
-//         potatoes.FindElementById("login-signin").Click();
-
-//         WebDriverWait espera = new WebDriverWait(potatoes, TimeSpan.FromSeconds(20));
-//         IWebElement input = espera.Until(ExpectedConditions.ElementIsVisible(By.Id("login-passwd")));
-
-//         Console.Write("Enter your password: ");
-//         string password = Console.ReadLine();
-
-//         input.SendKeys(password);
-//         potatoes.FindElementById("login-signin").Click();
-
-//         potatoes.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view/v1");
-
-//         espera.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@id='main']/section/section[2]/div[2]/table/tbody")));
-
-//         foreach (var ticker in potatoes.FindElementsByXPath("//*[@id='main']/section/section[2]/div[2]/table"))
-//         {
-//             Console.WriteLine(ticker.Text);
-            
-//             entity framework SQL
-//         }
-//     }
-    
-// var urlGet = new HtmlWeb();
-// var document = urlGet.Load("https://finance.yahoo.com/portfolio/p_0/view/v1");
-// var liTags = document.DocumentNode.SelectNodes("//table[@class='_1TagL']");
-
-// if (liTags != null)
-// {
-//     foreach (var li in liTags)
-//     {
-//         string tagcontent = li.InnerHtml;
-//         Console.WriteLine(tagcontent);
-//     }
-// }
-
-
-// create browser reference
-// IWebDriver driver = new ChromeDriver();
-
-// static void Main(string[] args)
-// {
-
-// }
-
-// [Test]
-// public void Initialize()
-// {
-//     //Navigate to Google page
-//     driver.Navigate().GoToUrl("http://www.google.com");
-// }
-
-// public void ExecuteTest()
-// {
-//     //Find the input
-//     IWebElement input = driver.FindElement(By.Name("q"));
-
-//     //perform Ops
-//     input.SendKeys("executeautomation");
-// }
-
-// public void CleanUp()
-// {
-//     driver.Close();
-// }
