@@ -88,5 +88,7 @@ namespace YahooScrape
 
             stocksDatabase.Close();
         }
+        
+        //add code to update values if they already exist
     }
 }
