@@ -508,7 +508,7 @@ namespace DCC_2_TicTacToe
                     location = 8;
                 } 
                 //play game with whatever location is
-                TokenMove();
+                TokenMove(LVL2AI);
             }
         }
         
