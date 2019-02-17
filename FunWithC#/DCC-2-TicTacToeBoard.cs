@@ -516,6 +516,7 @@ namespace DCC_2_TicTacToe
                 else
                 {
                     Console.WriteLine("Invalid move, enter an empty spot");
+                    Console.WriteLine("moving")
                     RunGame();
                 }
             }
