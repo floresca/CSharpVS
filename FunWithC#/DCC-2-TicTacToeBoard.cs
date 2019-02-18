@@ -518,6 +518,11 @@ namespace DCC_2_TicTacToe
                     Console.WriteLine("Invalid move, enter an empty spot");
                     Console.WriteLine("moving")
                     RunGame();
+                    if (spaces.Contains(Convert.ToString(input)))
+            {
+                int itemToRemove = spaces.IndexOf(Convert.ToString(input));
+                spaces.RemoveAt(itemToRemove);
+            }
                 }
             }
         }
