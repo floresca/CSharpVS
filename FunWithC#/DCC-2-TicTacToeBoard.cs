@@ -508,22 +508,7 @@ namespace DCC_2_TicTacToe
                     location = 8;
                 } 
                 //play game with whatever location is
-                TokenMove(LVL2AI);
-                if (playerVsAI && token == "O")
-                {
-                    RunGame();
-                }
-                else
-                {
-                    Console.WriteLine("Invalid move, enter an empty spot");
-                    Console.WriteLine("moving")
-                    RunGame();
-                    if (spaces.Contains(Convert.ToString(input)))
-            {
-                int itemToRemove = spaces.IndexOf(Convert.ToString(input));
-                spaces.RemoveAt(itemToRemove);
-            }
-                }
+               
             }
         }
         
