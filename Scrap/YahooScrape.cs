@@ -79,16 +79,31 @@ namespace YahooScrape
 
             stocksDatabase.Open();
 
+            SqlCommand databaseAlterations = new SqlCommand();
+
+            databaseAlterations.CommandText = "SELECT COUNT(id) FROM Stocks";
+            databaseAlterations.Connection = stocksDatabase;
+            Int32 count = (Int32)databaseAlterations.ExecuteScalar();
+
+            int uniqueID = count;
+
             for (int i = 0; i < elementsArray.Count; i++)
             {
-                SqlCommand items = new SqlCommand("INSERT INTO Stocks VALUES ( '" + elementsArray[i][0] + "', '" + elementsArray[i][1] + "', '" + elementsArray[i][2] + "', '" + elementsArray[i][3] + "', '" + elementsArray[i][6] + "', '" + elementsArray[i][12] + "')", stocksDatabase);
-                
-                items.ExecuteNonQuery();
+                uniqueID++;
+                string ticker = elementsArray[i][0];
+                string stockPrice = elementsArray[i][1];
+                string priceChange = elementsArray[i][2];
+                string pricePercentChange = elementsArray[i][3];
+                string tradeVolume = elementsArray[i][6];
+                string marketCap = elementsArray[i][12];
+
+
+                databaseAlterations.CommandText = "INSERT INTO Stocks VALUES ( '" + uniqueID + "', '" + ticker + "', '" + stockPrice + "', '" + priceChange + "', '" + pricePercentChange + "', '" + tradeVolume + "', '" + marketCap + "', GETDATE())";
+                databaseAlterations.Connection = stocksDatabase;
+                databaseAlterations.ExecuteNonQuery();
             }
 
             stocksDatabase.Close();
         }
-        
-        //add code to update values if they already exist
     }
 }
