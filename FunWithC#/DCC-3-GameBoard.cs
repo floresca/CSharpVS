@@ -4,55 +4,61 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DCC_2_TicTacToe
+namespace DCC_3_GameBoard
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var stuff = new TicTacToe();
+            var stuff = new GameBoardSetUp();
             stuff.CallSize();
 
         }
     }
 
-    class TicTacToe
+    class GameBoardSetUp : GameBoard
     {
-        int input = 0;
+        int width = 0;
+        int height = 0;
 
         public void CallSize()
         {
-            Console.Write("Enter a size: ");
-            input = Convert.ToInt32(Console.ReadLine());
-            Draw(input);
+            Console.Write("Enter a width: ");
+            width = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Enter a height: ");
+            height = Convert.ToInt32(Console.ReadLine());
+
+            Draw(width, height);
         }
+    }
 
-        public void Draw(int size)
+    class GameBoard : Connect4GameSetUp
+    {
+        char arrayCount = 'A';
+
+        public void Draw(int width, int height)
         {
-            int countDown = size;
-            int columnRow = size;
-
-
             do
             {
-                for (int column = 0; column < columnRow; column++)
+                for (int column = 0; column < width; column++)
                 {
-                    Console.Write("   ");
-                    if (column == columnRow - 1)
+                    Console.Write(" {0} ", arrayCount++);
+                    if (column == width - 1)
                     {
                         break;
                     }
                     Console.Write("|");
                 }
-                countDown--;
+                height--;
                 Console.WriteLine();
 
-                if (countDown > 0)
+                if (height > 0)
                 {
-                    for (int row = 0; row < columnRow; row++)
+                    for (int row = 0; row < width; row++)
                     {
                         Console.Write("---");
-                        if (row == columnRow - 1)
+                        if (row == width - 1)
                         {
                             break;
                         }
@@ -61,7 +67,18 @@ namespace DCC_2_TicTacToe
                     Console.WriteLine();
                 }
             }
-            while (countDown > 0);
+            while (height > 0);
         }
+    }
+
+    class Connect4GameSetUp
+    {
+        int tokenLocation = 0;
+        string userColumnSelect = null;
+        List<int> arrayRed = new List<int> { };       
+        List<int> arrayBlue = new List<int> { };
+        IDictionary<int, string> boardPieces = new Dictionary<int, string>();
+        List<string> columnA = new List<string> { };
+        bool isSpaceTaken = false;
     }
 }
