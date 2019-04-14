@@ -54,7 +54,7 @@ namespace facebook
                 switch (PPL)
                 {
                     case 0:
-                        Console.WriteLine("No likes yet");
+                        Console.WriteLine("No likes yet, check back later");
                         break;
                     case 1:
                         Console.WriteLine(people[0] + " has liked your post!");
