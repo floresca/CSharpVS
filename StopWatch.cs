@@ -26,7 +26,7 @@ namespace StopWatch
         {
             while (true)
             {
-                Console.Write("Enter 'start' to begin and 'stop' to end: ");
+                Console.Write("Enter 'start' to begin and 'stop' to end the program: ");
                 string input = Console.ReadLine();
 
                 if (input == "start")
